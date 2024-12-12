@@ -24,7 +24,7 @@ running = True
 while running:
 
     brightness.fill(0)
-    
+
     for obj in objects:
         pygame.draw.circle(surface, (255, 0, 0), (obj[0], obj[1]), obj[2])
 
@@ -36,6 +36,6 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-       
+
 
 pygame.quit()
