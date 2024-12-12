@@ -8,8 +8,7 @@ class Mirror:
         self.y = y
         self.length = length
         self.type = "Mirror"
-        pygame.draw.line(surface, (0, 0, 255),
-                         (x, y + length/2), (x, y - length/2), 3)
+        pygame.draw.line(surface, (0, 0, 255),(x, y + length/2), (x, y - length/2), 3)
 
     def reflect(self, light, ray_angle):
 

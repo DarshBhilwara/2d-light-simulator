@@ -3,8 +3,8 @@ class Obj :
         self.color = color 
         self.radius = radius 
         self.pos = pos 
-        self.x_cord = x_cord 
-        self.y_cord = y_cord 
-        self.typ = "Object"
+        self.x = x_cord 
+        self.y = y_cord 
+        self.type = "Object"
     
     

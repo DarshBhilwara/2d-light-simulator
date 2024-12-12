@@ -3,6 +3,7 @@ import numpy as np
 import math
 from lights import Lights 
 from mirror import Mirror
+from objects import Obj
 
 pygame.init()
 pygame.display.set_caption("Light")
@@ -23,11 +24,29 @@ brightness = np.zeros((width, height), dtype=np.float32)
 # objects = [(300, 400, 20)]
 objects = []
 # mirrors = [mirror1]
-mirrors = []
+
 running = True
 
+def resetbutton(objects):
+    objects.clear()
+    return 
 
-def button(x, y, txt, fn):
+def addMirror(objects):
+    newMirror = Mirror(360, 360, 50, surface)
+    objects.append(newMirror)
+    return
+
+def addLight(objects):
+    newLight = Lights(360, 360, (0, 0, 0), 500)
+    objects.append(newLight)
+    return 
+
+def addObject(objects):
+    newObj = Obj((110, 220, 110), 50, (360, 360), 360, 360)
+    objects.append(newObj)
+    return
+
+def button(x, y, txt, fn, object):
     white = (255, 255, 255)
     gray = (150, 150, 150)
     black = (0, 0, 0)
@@ -41,7 +60,8 @@ def button(x, y, txt, fn):
     if button_rect.collidepoint(mouse_pos):
         pygame.draw.rect(screen, button_hover_color, button_rect)
         if mouse_clicked:
-            pass  # call the funciton needed (fn)
+            fn(object)
+             # call the funciton needed (fn)
     else:
         pygame.draw.rect(screen, button_color, button_rect)
     text_surface = font.render(button_text, True, black)
@@ -50,19 +70,32 @@ def button(x, y, txt, fn):
 
 
 while running:
-
+    screen.fill((0, 0, 0))
     brightness.fill(0)
-    button(36, 620, 'Reset', 'resetfunction')
-    button(210, 620, 'Light', 'lightfunction')
-    button(384, 620, 'Object', 'objectfunction')
-    button(558, 620, 'Mirror', 'mirrorfunction')
+    surface.fill((0, 0, 0))
+    
+    print(objects)
     for obj in objects:
-        pygame.draw.circle(surface, (255, 0, 0), (obj[0], obj[1]), obj[2])
+        if obj.type == "Mirror":
+            pygame.draw.line(surface, (120, 240, 120), (obj.x, obj.y + obj.length/2), (obj.x, obj.y - obj.length/2))
+        elif obj.type == "Object":
+            pygame.draw.circle(surface, obj.color, obj.pos, obj.radius)
+        else:
+            obj.lighting(screen, brightness, objects)
 
-    # light.lighting(screen, brightness, objects, mirrors)
     screen.blit(surface, (0, 0))
+
+    button(36, 620, 'Reset', resetbutton, objects)
+    button(210, 620, 'Light', addLight, objects)
+    button(384, 620, 'Object', addObject, objects)
+    button(558, 620, 'Mirror', addMirror, objects)
+
+
     pygame.display.flip()
+
     clock.tick(60)
+
+    
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
