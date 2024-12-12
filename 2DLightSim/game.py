@@ -1,7 +1,7 @@
 import pygame
 import numpy as np
 import math
-from lights import Lights
+from lights import Lights 
 from mirror import Mirror
 
 pygame.init()
@@ -67,6 +67,12 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+        if pygame.mouse.get_pressed(): 
+            if event.type == pygame.MOUSEMOTION : 
+                new_pos = pygame.mouse.get_pos()
+                cord1 = new_pos[0]
+                cord2 = new_pos[1] 
 
 
 pygame.quit()
