@@ -7,5 +7,5 @@ git clone https://github.com/DarshBhilwara/2d-light-simulator
 cd 2d-light-simulator
 pip install -r ./requirements.txt
 cd 2DLightSim
-python3 ./game.py
+python ./game.py
 ```

@@ -1,8 +1,8 @@
 import pygame
 import numpy as np
 import math
+from objects import obj 
 from lights import Lights
-from objects import Object
 from mirror import Mirror
 
 pygame.init()
