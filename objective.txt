@@ -6,6 +6,5 @@ make 4 buttons :
     4. Add A light source
 
 
-
 Ability to drag Objects across the screen 
 Ability to increase and decrease size after selecting an object

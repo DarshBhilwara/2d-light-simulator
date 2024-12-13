@@ -7,6 +7,7 @@ class Mirror:
         self.x = x
         self.y = y
         self.length = length
+        self.type = "Mirror"
         pygame.draw.line(surface, (0, 0, 255),
                          (x, y + length/2), (x, y - length/2), 3)
 

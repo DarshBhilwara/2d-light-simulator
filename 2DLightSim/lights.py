@@ -12,6 +12,7 @@ class Lights:
         self.y = y
         self.color = color
         self.intensity = intensity
+        self.type = "Lights"
 
     def lighting(self, screen, brightness, objects, mirrors):
         for i in range(720):
