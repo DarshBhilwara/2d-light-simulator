@@ -10,8 +10,11 @@ pygame.display.set_caption("Light")
 
 width = 720
 height = 720
+
 screen = pygame.display.set_mode((width, height))
+
 clock, fps = pygame.time.Clock(), 1000
+
 surface = pygame.Surface((720, 720), pygame.SRCALPHA)
 surface.fill((0, 0, 0, 0))
 light = Lights(400, 300, 240, 500)
@@ -21,6 +24,8 @@ mirror1 = Mirror(200, 250, 75, surface)
 objects = [(300, 400, 20)]
 mirrors = [mirror1]
 running = True
+
+
 while running:
 
     brightness.fill(0)

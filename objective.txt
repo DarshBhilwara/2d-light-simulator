@@ -1,0 +1,11 @@
+make class for Objects
+make 4 buttons :
+    1. RESET all the objects
+    2. Add An Objects to the center of the screen
+    3. Add A mirror 
+    4. Add A light source
+
+
+
+Ability to drag Objects across the screen 
+Ability to increase and decrease size after selecting an object
