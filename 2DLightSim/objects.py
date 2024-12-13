@@ -6,5 +6,6 @@ class Obj :
         self.x = x_cord 
         self.y = y_cord 
         self.type = "Object"
+        self.moving = False
     
     

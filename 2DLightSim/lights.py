@@ -28,10 +28,11 @@ class Lights:
             while ray_length < 800:
                 rayx += raydx
                 rayy += raydy
-
+                hit = False
                 for obj in objects:
                     if obj.type == "Object":    
                         if math.sqrt((rayx - obj.x)**2 + (rayy - obj.y)**2) <= obj.radius:
+                            hit = True
                             ray_length = 1000
                             break
 
@@ -42,7 +43,7 @@ class Lights:
                             raydx = math.cos(angle)
                             raydy = math.sin(angle)
 
-                if (int(rayx) >= 720 or int(rayx) < 0 or int(rayy) >= 720 or int(rayy) < 0):
+                if hit or (int(rayx) >= 720 or int(rayx) < 0 or int(rayy) >= 720 or int(rayy) < 0):
                     break
 
                 brightness[int(rayx)][int(rayy)] += (self.intensity/(ray_length + 0.0001))

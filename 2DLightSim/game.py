@@ -35,10 +35,7 @@ def addMirror(objects):
     objects.append(newMirror)
     return
 
-def addLight(objects):
-    newLight = Lights(360, 360, (0, 0, 0), 500)
-    objects.append(newLight)
-    return 
+
 
 def addObject(objects):
     newObj = Obj((110, 220, 110), 50, (360, 360), 360, 360)
@@ -73,10 +70,11 @@ def draw_objects(surface, objects):
     surface.fill((0, 0, 0, 0))
     for obj in objects:
         if obj.type == "Mirror":
-            pygame.draw.line(surface, (120, 240, 120), (obj.x, obj.y + obj.length/2), (obj.x, obj.y - obj.length/2))
+            pygame.draw.rect(surface, (120, 240, 120), [obj.x - 3, obj.y - obj.length/2, 6, obj.length])
         elif obj.type == "Object":
-            pygame.draw.circle(surface, obj.color, obj.pos, obj.radius)
+            pygame.draw.circle(surface, obj.color, (obj.x, obj.y) , obj.radius)
 
+light = Lights(500, 100, (255, 255, 255), 1000)
 
 while running:
 
@@ -86,29 +84,56 @@ while running:
     print(objects)
         
     draw_objects(surface, objects)
-    for obj in objects:
-        if obj.type != "Mirror" and obj.type != "Object":
-            obj.lighting(screen, brightness, objects)
+    light.lighting(screen, brightness, objects)
 
     
     button(36, 620, 'Reset', resetbutton, objects)
-    button(210, 620, 'Light', addLight, objects)
     button(384, 620, 'Object', addObject, objects)
     button(558, 620, 'Mirror', addMirror, objects)
 
 
+    
+    for event in pygame.event.get():
+        
+        if event.type == pygame.QUIT:
+            running = False
+        
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                    for ob in objects:
+                        if ob.type == "Object":
+                            dx = ob.x - event.pos[0] # a
+                            dy = ob.y - event.pos[1] # b
+                            distance_square = dx**2 + dy**2 # c^2
+
+                            if distance_square <= ob.radius**2: # c^2 <= radius^2
+                                print("selected")
+                                ob.moving = True
+                                selected_offset_x = ob.x - event.pos[0]
+                                selected_offset_y = ob.y - event.pos[1]
+
+                        if ob.type == "Mirror":
+                            if abs(event.pos[0] - ob.x) <= 3 and abs(event.pos[1] - ob.y) <= ob.length/2:
+                                ob.moving = True
+                                selected_offset_x = ob.x - event.pos[0]
+                                selected_offset_y = ob.y - event.pos[1]
+
+               
+        elif event.type == pygame.MOUSEBUTTONUP:
+            if event.button == 1:
+                for ob in objects:
+                    ob.moving = False
+               
+        elif event.type == pygame.MOUSEMOTION:
+            for ob in objects:
+                if ob.moving:
+                    ob.x = event.pos[0] + selected_offset_x
+                    ob.y = event.pos[1] + selected_offset_y
+
+                    draw_objects(surface, objects)
+                
     screen.blit(surface, (0, 0))
     pygame.display.flip()
     clock.tick(60)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-        if pygame.mouse.get_pressed(): 
-            if event.type == pygame.MOUSEMOTION : 
-                new_pos = pygame.mouse.get_pos()
-                cord1 = new_pos[0]
-                cord2 = new_pos[1] 
-
 
 pygame.quit()
