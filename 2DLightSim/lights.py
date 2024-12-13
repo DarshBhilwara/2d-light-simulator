@@ -35,7 +35,7 @@ class Lights:
                             ray_length = 1000
                             break
 
-                for obj in objects:
+                
                     if obj.type == "Mirror":
                         if 0 <= abs(rayx - obj.x) <= 1 and obj.y - obj.length/2 <= int(rayy) <= obj.y + obj.length/2:
                             angle = obj.reflect(self, angle)
@@ -46,7 +46,12 @@ class Lights:
                     break
 
                 brightness[int(rayx)][int(rayy)] += (self.intensity/(ray_length + 0.0001))
-                intense = min(255, int(brightness[int(rayx)][int(rayy)])*10)
-                screen.set_at((int(rayx), int(rayy)),(intense, intense, intense))
 
                 ray_length += 1
+
+        brightness = numpy.clip(brightness * 10, 0, 255).astype(numpy.uint8)
+        for x in range(720):
+            for y in range(720):
+                intense = brightness[x, y]
+                if intense > 0:
+                    screen.set_at((x, y), (intense, intense, intense)) 
